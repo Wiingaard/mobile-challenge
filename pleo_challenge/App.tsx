@@ -11,12 +11,13 @@
 import React, { Component } from 'react';
 import {
     SafeAreaView,
-    Button,
+    StyleSheet
 } from 'react-native';
 
 import ExpensesList from './pleo_challenge/expensesList';
 import HeaderView from './pleo_challenge/headerView';
-import { Expense, getExpenses } from './pleo_challenge/networking';
+import { Expense } from './pleo_challenge/networking';
+import { ExpenseManager } from './pleo_challenge/expenseManager';
 
 interface Props {
 
@@ -24,34 +25,57 @@ interface Props {
 
 interface State {
     expenses: Expense[]
-    loadingExpenses: boolean
+    loading: boolean
+    didFinishInitialLoad: boolean
 }
 
 const initialState: State = {
     expenses: [],
-    loadingExpenses: true
+    loading: true,
+    didFinishInitialLoad: false
 }
+
+const expenseManager = new ExpenseManager()
 
 export default class App extends Component<Props, State> {
 
     componentDidMount() {
-        getExpenses(0, 1000)
-            .then(expenses => {
-                this.setState({
+        expenseManager.didUpdateExpenses = (expenses) => {
+            this.setState((previousState) => {
+                console.log(`Update state, expenses: ${expenses.length}`)
+                return {
                     expenses: expenses,
-                    loadingExpenses: false
-                })
+                    loading: false,
+                    didFinishInitialLoad: true
+                }
             })
+        }
+
+        expenseManager.getInitialExpenses()
     }
 
     state = initialState
 
     render() {
         return (
-            <SafeAreaView style={{ flex: 1, flexDirection: "column", justifyContent: "flex-start" }}>
-                <HeaderView title="Expenses" />
-                <ExpensesList expenses={this.state.expenses} loading={this.state.loadingExpenses} />
+            <SafeAreaView style={styles.mainArea}>
+                <HeaderView
+                    title="Expenses"
+                />
+                <ExpensesList
+                    expenses={this.state.expenses}
+                    initialLoad={!this.state.didFinishInitialLoad}
+                    isScrolledCloseToBottom={(isClose) => { expenseManager.isScrolledCloseToBottom(isClose) }}
+                />
             </SafeAreaView>
         );
     }
 };
+
+const styles = StyleSheet.create({
+    mainArea: {
+        flex: 1,
+        flexDirection: "column",
+        justifyContent: "flex-start"
+    }
+})

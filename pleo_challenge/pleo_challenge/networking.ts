@@ -19,12 +19,17 @@ export interface Expense {
     };
 }
 
-export function getExpenses(offset: number, limit: number): Promise<Expense[]> {
+export interface ExpenseRequestParameters { 
+    offset: number, 
+    limit: number 
+}
+
+export function getExpenses(params: ExpenseRequestParameters): Promise<Expense[]> {
     const request: RequestInit = {
         method: 'GET'
     }
 
-    const query = BASE_URL + `/expenses?limit=${limit}&offset=${offset}`
+    const query = BASE_URL + `/expenses?limit=${params.limit}&offset=${params.offset}`
 
     return fetch(query, request)
         .then(response => { return response.json() })

@@ -1,29 +1,35 @@
 import React, { Component } from 'react';
-import { FlatList, StyleSheet, View, ActivityIndicator } from 'react-native';
+import { FlatList, ActivityIndicator, NativeSyntheticEvent, NativeScrollEvent } from 'react-native';
 import { Expense } from './networking';
 import ExpenseCell from './expenseCell';
 
 export interface Props {
     expenses: Expense[],
-    loading: boolean
+    initialLoad: boolean,
+    isScrolledCloseToBottom: ((boolean) => void)
 }
 
 export default class ExpensesList extends Component<Props> {
+    constructor(props) {
+        super(props)
 
+    }
     handleExpensePress(expense: Expense) {
         alert(`Expense: ${expense.amount.value}`)
     }
+    
+    onScroll(event: NativeSyntheticEvent<NativeScrollEvent>) {
+        this.props.isScrolledCloseToBottom(closeToButtom(event, 200))
+    }
 
     render() {
-        if (this.props.loading) {
+        if (this.props.initialLoad) {
             return (
-                <View style={styles.container}>
-                    <ActivityIndicator style={{ height: 300 }} />
-                </View>
+                <ActivityIndicator style={{ height: 300 }} />
             )
         } else {
             return (
-                <FlatList
+                <FlatList onScroll={(e) => { this.onScroll(e) }}
                     data={this.props.expenses}
                     renderItem={({ item }) => <ExpenseCell expense={item} onPress={this.handleExpensePress} />}
                 />
@@ -32,9 +38,8 @@ export default class ExpensesList extends Component<Props> {
     }
 }
 
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        paddingTop: 22
-    }
-})
+function closeToButtom(event: NativeSyntheticEvent<NativeScrollEvent>, closeDistance: number): boolean {
+    const scrollView = event.nativeEvent
+    //console.log(`${scrollView.layoutMeasurement.height} + ${scrollView.contentOffset.y} >= ${scrollView.contentSize.height} - ${closeDistance}`)
+    return scrollView.layoutMeasurement.height + scrollView.contentOffset.y >= scrollView.contentSize.height - closeDistance
+}
