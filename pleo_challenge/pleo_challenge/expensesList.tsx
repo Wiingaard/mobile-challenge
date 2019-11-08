@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { FlatList, StyleSheet, Text, View, ActivityIndicator } from 'react-native';
+import { FlatList, StyleSheet, View, ActivityIndicator } from 'react-native';
 import { Expense } from './networking';
+import ExpenseCell from './expenseCell';
 
 export interface Props {
     expenses: Expense[],
@@ -8,20 +9,24 @@ export interface Props {
 }
 
 export default class ExpensesList extends Component<Props> {
-    
+
+    handleExpensePress(expense: Expense) {
+        alert(`Expense: ${expense.amount.value}`)
+    }
+
     render() {
         if (this.props.loading) {
             return (
                 <View style={styles.container}>
-                    <ActivityIndicator style={{height: 300}}/>
+                    <ActivityIndicator style={{ height: 300 }} />
                 </View>
             )
         } else {
             return (
                 <FlatList
-                data={this.props.expenses}
-                renderItem={({ item }) => <Text style={styles.item}>{item.amount.value}</Text>}
-            />
+                    data={this.props.expenses}
+                    renderItem={({ item }) => <ExpenseCell expense={item} onPress={this.handleExpensePress} />}
+                />
             )
         }
     }
@@ -31,10 +36,5 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         paddingTop: 22
-    },
-    item: {
-        padding: 10,
-        fontSize: 18,
-        height: 44,
-    },
+    }
 })

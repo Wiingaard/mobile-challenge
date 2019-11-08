@@ -19,7 +19,7 @@ import HeaderView from './pleo_challenge/headerView';
 import { Expense, getExpenses } from './pleo_challenge/networking';
 
 interface Props {
-    
+
 }
 
 interface State {
@@ -35,7 +35,7 @@ const initialState: State = {
 export default class App extends Component<Props, State> {
 
     componentDidMount() {
-        getExpenses(0, 10)
+        getExpenses(0, 1000)
             .then(expenses => {
                 this.setState({
                     expenses: expenses,
@@ -50,11 +50,6 @@ export default class App extends Component<Props, State> {
         return (
             <SafeAreaView style={{ flex: 1, flexDirection: "column", justifyContent: "flex-start" }}>
                 <HeaderView title="Expenses" />
-                <Button onPress={() => {
-                    alert("WOW")
-                }}
-                    title="Alert"
-                />
                 <ExpensesList expenses={this.state.expenses} loading={this.state.loadingExpenses} />
             </SafeAreaView>
         );
