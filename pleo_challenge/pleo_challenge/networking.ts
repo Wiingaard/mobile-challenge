@@ -1,7 +1,7 @@
 
 const BASE_URL = "http://localhost:3000"
 
-interface Expense {
+export interface Expense {
     id: string;
     amount: {
         value: string,
@@ -19,7 +19,7 @@ interface Expense {
     };
 }
 
-export function getExpenses(limit: number, offset: number): Promise<Expense[]> {
+export function getExpenses(offset: number, limit: number): Promise<Expense[]> {
     const request: RequestInit = {
         method: 'GET'
     }

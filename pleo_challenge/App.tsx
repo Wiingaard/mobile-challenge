@@ -8,64 +8,55 @@
  * @format
  */
 
-import React, { Fragment } from 'react';
+import React, { Component } from 'react';
 import {
     SafeAreaView,
-    StyleSheet,
-    ScrollView,
-    View,
-    Text,
-    StatusBar,
     Button,
 } from 'react-native';
 
-import { Colors } from 'react-native/Libraries/NewAppScreen';
+import ExpensesList from './pleo_challenge/expensesList';
+import HeaderView from './pleo_challenge/headerView';
+import { Expense, getExpenses } from './pleo_challenge/networking';
 
-import { getExpenses } from './pleo_challenge/networking';
+interface Props {
+    
+}
 
-const App = () => {
-    return (
-        <Fragment>
-            <StatusBar barStyle="dark-content" />
-            <SafeAreaView>
-                <View style={styles.sectionContainer}>
-                    <Text style={styles.sectionTitle}>Hello</Text>
-                    <Text style={styles.sectionDescription}>
-                        Pleo challenge goes here
-                    </Text>
-                </View>
-                <Button onPress={() => {
-                    getExpenses(5, 0)
-                        .then(expenses => {
-                            const debugInfo = expenses.map(expense => { return expense.id }).join('\n')
-                            alert(`Success\n${debugInfo}`)
-                        }).catch(error => {
-                            alert(`Error\n${error}`);
-                        })
-                }}
-                    title="Get Expenses"
-                />
-            </SafeAreaView>
-        </Fragment>
-    );
-};
+interface State {
+    expenses: Expense[]
+    loadingExpenses: boolean
+}
 
-const styles = StyleSheet.create({
-    sectionContainer: {
-        marginTop: 32,
-        paddingHorizontal: 24,
-    },
-    sectionTitle: {
-        fontSize: 24,
-        fontWeight: '600',
-        color: Colors.black,
-    },
-    sectionDescription: {
-        marginTop: 8,
-        fontSize: 18,
-        fontWeight: '400',
-        color: Colors.dark,
+const initialState: State = {
+    expenses: [],
+    loadingExpenses: true
+}
+
+export default class App extends Component<Props, State> {
+
+    componentDidMount() {
+        getExpenses(0, 10)
+            .then(expenses => {
+                this.setState({
+                    expenses: expenses,
+                    loadingExpenses: false
+                })
+            })
     }
-});
 
-export default App;
+    state = initialState
+
+    render() {
+        return (
+            <SafeAreaView style={{ flex: 1, flexDirection: "column", justifyContent: "flex-start" }}>
+                <HeaderView title="Expenses" />
+                <Button onPress={() => {
+                    alert("WOW")
+                }}
+                    title="Alert"
+                />
+                <ExpensesList expenses={this.state.expenses} loading={this.state.loadingExpenses} />
+            </SafeAreaView>
+        );
+    }
+};
