@@ -1,4 +1,4 @@
-import { Expense, getExpenses } from "./networking"
+import { Expense, getExpenses, getExpense, postExpenseComment } from "./networking"
 
 export class ExpenseManager {
 
@@ -36,5 +36,22 @@ export class ExpenseManager {
     }
 
     didUpdateExpenses(expenses: Expense[]) { }
+
+    public getExpenseFor(expenseId: string): Promise<Expense> {
+        return getExpense(expenseId)
+    }
+
+    public addCommentToExpense(expenseId: string, comment: string): Promise<Expense> {
+        return postExpenseComment(expenseId, comment)
+            .then(updatedExpense => {
+                this.expenses = this.expenses.map(expense => { 
+                    return expense.id === expenseId ? updatedExpense : expense 
+                })
+                this.didUpdateExpense(updatedExpense)
+                return updatedExpense
+            })
+    }
+
+    didUpdateExpense(expense: Expense) { }
 
 }

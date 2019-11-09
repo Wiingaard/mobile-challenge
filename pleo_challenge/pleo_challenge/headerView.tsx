@@ -1,5 +1,5 @@
 import React, { Component } from "react"
-import { View, Text, StyleSheet } from "react-native"
+import { Text, StyleSheet, SafeAreaView } from "react-native"
 import { ImageButton } from "./imageButton";
 
 export interface Props {
@@ -10,7 +10,7 @@ export interface Props {
 export default class HeaderView extends Component<Props> {
     render() {
         return (
-            <View style={styles.bar}>
+            <SafeAreaView style={styles.bar}>
                 <Text style={[styles.titleContainer, styles.titleText]}>
                     {this.props.title}
                 </Text>
@@ -24,7 +24,7 @@ export default class HeaderView extends Component<Props> {
                         />
                         : null
                 }
-            </View>
+            </SafeAreaView>
         );
     }
 };
@@ -35,7 +35,6 @@ const styles = StyleSheet.create({
         fontWeight: '600'
     },
     titleContainer: {
-        position: "relative",
         flexGrow: 1,
         textAlign: "center"
     },

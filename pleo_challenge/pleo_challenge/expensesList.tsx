@@ -6,15 +6,15 @@ import ExpenseCell from './expenseCell';
 export interface Props {
     expenses: Expense[]
     initialLoad: boolean
-    isScrolledCloseToBottom: ((boolean) => void)
-    didPressExpense: ((string) => void)
+    isScrolledCloseToBottom: ((isClose: boolean) => void)
+    didPressExpense: ((expense: Expense) => void)
 }
 
 export default class ExpensesList extends Component<Props> {
     constructor(props) {
         super(props)
     }
-    
+
     onScroll(event: NativeSyntheticEvent<NativeScrollEvent>) {
         this.props.isScrolledCloseToBottom(closeToButtom(event, 200))
     }
@@ -26,9 +26,10 @@ export default class ExpensesList extends Component<Props> {
             )
         } else {
             return (
-                <FlatList onScroll={(e) => { this.onScroll(e) }}
+                <FlatList 
+                    onScroll={(e) => { this.onScroll(e) }}
                     data={this.props.expenses}
-                    renderItem={({ item }) => <ExpenseCell expense={item} onPress={() => this.props.didPressExpense(item.id)} />}
+                    renderItem={({ item }) => <ExpenseCell expense={item} onPress={() => this.props.didPressExpense(item)} />}
                 />
             )
         }

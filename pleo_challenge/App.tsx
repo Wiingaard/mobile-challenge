@@ -28,14 +28,14 @@ interface State {
     expenses: Expense[]
     loading: boolean
     didFinishInitialLoad: boolean
-    visibleExpenseDetail: string | null
+    showExpenseDetail: Expense | null
 }
 
 const initialState: State = {
     expenses: [],
     loading: true,
     didFinishInitialLoad: false,
-    visibleExpenseDetail: null
+    showExpenseDetail: null
 }
 
 const expenseManager = new ExpenseManager()
@@ -48,20 +48,31 @@ export default class App extends Component<Props, State> {
                 expenses: expenses,
                 loading: false,
                 didFinishInitialLoad: true,
-                visibleExpenseDetail: null
+                showExpenseDetail: null
+            })
+        }
+
+        expenseManager.didUpdateExpense = (expense) => {
+            this.setState(prevState => {
+                return {
+                    expenses: prevState.expenses.map(e => { return e.id == expense.id ? expense : e }),
+                    loading: prevState.loading,
+                    didFinishInitialLoad: prevState.didFinishInitialLoad,
+                    showExpenseDetail: expense
+                }
             })
         }
 
         expenseManager.getInitialExpenses()
     }
 
-    setModalVisible(visibleExpense?: string) {
+    setModalVisible(expense: (Expense | null)) {
         this.setState(prevState => {
             return {
                 expenses: prevState.expenses,
                 loading: prevState.loading,
                 didFinishInitialLoad: prevState.didFinishInitialLoad,
-                visibleExpenseDetail: visibleExpense
+                showExpenseDetail: expense
             }
         });
     }
@@ -76,16 +87,17 @@ export default class App extends Component<Props, State> {
                     closeButtonAction={null}
                 />
 
-                <ExpenseDetail
-                    visibleExpenseDetail={this.state.visibleExpenseDetail}
-                    close={() => { this.setModalVisible(null) }}
-                />
-
                 <ExpensesList
                     expenses={this.state.expenses}
                     initialLoad={!this.state.didFinishInitialLoad}
                     isScrolledCloseToBottom={(isClose) => { expenseManager.isScrolledCloseToBottom(isClose) }}
-                    didPressExpense={(expenseId) => { this.setModalVisible(expenseId) }}
+                    didPressExpense={(expense) => { this.setModalVisible(expense) }}
+                />
+
+                <ExpenseDetail
+                    expense={this.state.showExpenseDetail}
+                    close={() => { this.setModalVisible(null) }}
+                    expenseManager={expenseManager}
                 />
             </SafeAreaView>
         );
