@@ -73,6 +73,7 @@ export default class App extends Component<Props, State> {
             <SafeAreaView style={styles.mainArea}>
                 <HeaderView
                     title="Expenses"
+                    closeButtonAction={null}
                 />
 
                 <ExpenseDetail
