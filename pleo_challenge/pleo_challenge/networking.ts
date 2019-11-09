@@ -41,3 +41,43 @@ export function getExpenses(params: ExpenseRequestParameters): Promise<Expense[]
             return Promise.reject(error)
         })
 }
+
+export function getExpense(id: string): Promise<Expense> {
+    const request: RequestInit = {
+        method: 'GET'
+    }
+
+    const query = BASE_URL + `/expenses/${id}`
+
+    return fetch(query, request)
+        .then(response => { return response.json() })
+        .then(json => {
+            return json as Expense
+        })
+        .catch(error => {
+            console.error(`'GET /expense': ${error}`)
+            return Promise.reject(error)
+        })
+}
+
+export function postExpenseComment(id: string, comment: string): Promise<Expense> {
+    const request: RequestInit = {
+        method: 'POST',
+        body: JSON.stringify({ 
+            comment: comment
+        }),
+        headers: { 'Content-type': 'application/json' }
+    }
+
+    const query = BASE_URL + `/expenses/${id}`
+
+    return fetch(query, request)
+        .then(response => { return response.json() })
+        .then(json => {
+            return json as Expense
+        })
+        .catch(error => {
+            console.error(`'POST /expense': ${error}`)
+            return Promise.reject(error)
+        })
+}
