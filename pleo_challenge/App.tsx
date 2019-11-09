@@ -18,6 +18,7 @@ import ExpensesList from './pleo_challenge/expensesList';
 import HeaderView from './pleo_challenge/headerView';
 import { Expense } from './pleo_challenge/networking';
 import { ExpenseManager } from './pleo_challenge/expenseManager';
+import { ExpenseDetail } from './pleo_challenge/expenseDetail';
 
 interface Props {
 
@@ -27,12 +28,14 @@ interface State {
     expenses: Expense[]
     loading: boolean
     didFinishInitialLoad: boolean
+    visibleExpenseDetail: string | null
 }
 
 const initialState: State = {
     expenses: [],
     loading: true,
-    didFinishInitialLoad: false
+    didFinishInitialLoad: false,
+    visibleExpenseDetail: null
 }
 
 const expenseManager = new ExpenseManager()
@@ -41,17 +44,26 @@ export default class App extends Component<Props, State> {
 
     componentDidMount() {
         expenseManager.didUpdateExpenses = (expenses) => {
-            this.setState((previousState) => {
-                console.log(`Update state, expenses: ${expenses.length}`)
-                return {
-                    expenses: expenses,
-                    loading: false,
-                    didFinishInitialLoad: true
-                }
+            this.setState({
+                expenses: expenses,
+                loading: false,
+                didFinishInitialLoad: true,
+                visibleExpenseDetail: null
             })
         }
 
         expenseManager.getInitialExpenses()
+    }
+
+    setModalVisible(visibleExpense?: string) {
+        this.setState(prevState => {
+            return {
+                expenses: prevState.expenses,
+                loading: prevState.loading,
+                didFinishInitialLoad: prevState.didFinishInitialLoad,
+                visibleExpenseDetail: visibleExpense
+            }
+        });
     }
 
     state = initialState
@@ -62,10 +74,17 @@ export default class App extends Component<Props, State> {
                 <HeaderView
                     title="Expenses"
                 />
+
+                <ExpenseDetail
+                    visibleExpenseDetail={this.state.visibleExpenseDetail}
+                    close={() => { this.setModalVisible(null) }}
+                />
+
                 <ExpensesList
                     expenses={this.state.expenses}
                     initialLoad={!this.state.didFinishInitialLoad}
                     isScrolledCloseToBottom={(isClose) => { expenseManager.isScrolledCloseToBottom(isClose) }}
+                    didPressExpense={(expenseId) => { this.setModalVisible(expenseId) }}
                 />
             </SafeAreaView>
         );
