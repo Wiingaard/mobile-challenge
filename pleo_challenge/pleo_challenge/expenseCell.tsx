@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { Expense } from './networking';
+import { bodyPrimary, bodySecondary } from './styles/textStyles';
 
 export interface Props {
     expense: Expense
@@ -15,10 +16,10 @@ export default class ExpenseCell extends Component<Props> {
                     <View style={[styles.circle, { backgroundColor: colorForCurrency(this.props.expense.amount.currency) }]} />
                     <View style={styles.container}>
                         <View style={styles.primaryTextContainer}>
-                            <Text style={styles.primaryText}>{this.props.expense.user.first}</Text>
-                            <Text style={styles.primaryText}>{this.props.expense.amount.value + " " + this.props.expense.amount.currency}</Text>
+                            <Text style={bodyPrimary}>{this.props.expense.user.first}</Text>
+                            <Text style={bodyPrimary}>{this.props.expense.amount.value + " " + this.props.expense.amount.currency}</Text>
                         </View>
-                        <Text style={styles.secondaryText}>{formattedDate(this.props.expense.date)}</Text>
+                        <Text style={bodySecondary}>{formattedDate(this.props.expense.date)}</Text>
                     </View>
                 </View>
             </TouchableOpacity>
@@ -57,14 +58,6 @@ const styles = StyleSheet.create({
     primaryTextContainer: {
         flexDirection: "row", 
         justifyContent: "space-between" 
-    },
-    primaryText: {
-        fontSize: 14,
-        fontWeight: "400"
-    },
-    secondaryText: {
-        fontSize: 12,
-        fontWeight: "200"
     },
     container: {
         flex: 1,

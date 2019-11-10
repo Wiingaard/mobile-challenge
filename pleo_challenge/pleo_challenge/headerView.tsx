@@ -1,6 +1,7 @@
 import React, { Component } from "react"
 import { Text, StyleSheet, SafeAreaView } from "react-native"
 import { ImageButton } from "./imageButton";
+import { titlePrimary } from "./styles/textStyles";
 
 export interface Props {
     title: string;
@@ -11,7 +12,7 @@ export default class HeaderView extends Component<Props> {
     render() {
         return (
             <SafeAreaView style={styles.bar}>
-                <Text style={[styles.titleContainer, styles.titleText]}>
+                <Text style={[styles.titleContainer, titlePrimary]}>
                     {this.props.title}
                 </Text>
                 {
@@ -30,10 +31,6 @@ export default class HeaderView extends Component<Props> {
 };
 
 const styles = StyleSheet.create({
-    titleText: {
-        fontSize: 18,
-        fontWeight: '600'
-    },
     titleContainer: {
         flexGrow: 1,
         textAlign: "center"
