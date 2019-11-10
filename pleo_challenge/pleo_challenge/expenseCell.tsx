@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { Expense } from './networking';
 import { bodyPrimary, bodySecondary } from './styles/textStyles';
+import { dateFormatted } from './date';
 
 export interface Props {
     expense: Expense
@@ -19,7 +20,7 @@ export default class ExpenseCell extends Component<Props> {
                             <Text style={bodyPrimary}>{this.props.expense.user.first}</Text>
                             <Text style={bodyPrimary}>{this.props.expense.amount.value + " " + this.props.expense.amount.currency}</Text>
                         </View>
-                        <Text style={bodySecondary}>{formattedDate(this.props.expense.date)}</Text>
+                        <Text style={bodySecondary}>{dateFormatted(this.props.expense.date)}</Text>
                     </View>
                 </View>
             </TouchableOpacity>
@@ -35,11 +36,6 @@ function colorForCurrency(currency: string): Color {
         case "GBP": return "#78ccf7"
         default: return "#e85e5a"
     }
-}
-
-function formattedDate(dateString: string): string {
-    const date = new Date(dateString)
-    return date.toLocaleDateString("en-US")
 }
 
 type Color = "#61e496" | "#ee9456" | "#78ccf7" | "#e85e5a"

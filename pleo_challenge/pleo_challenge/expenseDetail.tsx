@@ -37,7 +37,8 @@ export class ExpenseDetail extends Component<Props> {
                     {this.props.expense === null
                         ? <ActivityIndicator />
                         : <View>
-                            <ExpenseCard expense={this.props.expense} />
+                            <ExpenseCard
+                                expense={this.props.expense} />
                             <ExpenseCommentCard
                                 expense={this.props.expense}
                                 saveComment={(comment) => { this.saveComment(comment) }} />
