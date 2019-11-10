@@ -4,6 +4,7 @@ import { Expense } from './networking';
 import { titlePrimary } from './styles/textStyles';
 import { RoundedButton } from './roundedButton';
 import { whiteRoundedCard, cardContent } from './styles/cardStyles';
+import { color } from './styles/color';
 
 export interface Props {
     expense: Expense
@@ -23,11 +24,11 @@ export default class ExpenseCommentCard extends Component<Props, State> {
         return (
             <View style={whiteRoundedCard}>
                 <View style={cardContent}>
-                    <Text style={[titlePrimary, {marginBottom: 12}]}>Comment</Text>
+                    <Text style={[titlePrimary, { marginBottom: 12 }]}>Comment</Text>
                     <TextInput
                         multiline={true}
                         placeholder="Type a comment here"
-                        style={{ textAlignVertical: "top", marginBottom:24 }}
+                        style={{ textAlignVertical: "top", marginBottom: 24 }}
                         onChangeText={(text) => this.setState({ comment: text })}
                         value={this.state.comment}
                     />
@@ -35,6 +36,7 @@ export default class ExpenseCommentCard extends Component<Props, State> {
                         title={"Save"}
                         onPress={() => { this.props.saveComment(this.state.comment) }}
                         isEnabled={this.state.comment.length > 0 || this.props.expense.comment.length > 0}
+                        color={color.pleoGreen}
                     />
                 </View>
             </View>

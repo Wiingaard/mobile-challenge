@@ -5,6 +5,8 @@ import { ExpenseManager } from './expenseManager';
 import { Expense } from './networking';
 import ExpenseCard from './expenseCard';
 import ExpenseCommentCard from './expenseCommentCard';
+import { RoundedButton } from './roundedButton';
+import { color } from './styles/color';
 
 export interface Props {
     expense: Expense | null
@@ -21,6 +23,10 @@ export class ExpenseDetail extends Component<Props> {
             }).catch(error => {
                 Alert.alert("Error", `An error happened while saving the comment:\n${error}`)
             })
+    }
+
+    addReceipt() {
+        Alert.alert("Not implemented", "Adding an image of a receipt is not implemented")
     }
 
     render() {
@@ -42,6 +48,13 @@ export class ExpenseDetail extends Component<Props> {
                             <ExpenseCommentCard
                                 expense={this.props.expense}
                                 saveComment={(comment) => { this.saveComment(comment) }} />
+                            <View style={{margin: 60, alignSelf: "center"}}>
+                                <RoundedButton
+                                    title={"Add Receipt"}
+                                    isEnabled={true}
+                                    onPress={() => { this.addReceipt() }}
+                                    color={color.pleoGreen} />
+                            </View>
                         </View>
                     }
                 </SafeAreaView>

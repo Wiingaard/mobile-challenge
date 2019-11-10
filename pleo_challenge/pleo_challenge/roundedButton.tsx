@@ -6,6 +6,7 @@ export interface Props {
     onPress: (() => void)
     title: string
     isEnabled: boolean
+    color: string
 }
 
 export class RoundedButton extends Component<Props> {
@@ -19,7 +20,7 @@ export class RoundedButton extends Component<Props> {
                     alignSelf: "flex-start",
                     height: 32,
                     borderRadius: 16,
-                    backgroundColor: this.props.isEnabled ? "#61e496" : "#61e49677",
+                    backgroundColor: this.props.isEnabled ? this.props.color : this.props.color + "77",
                 }}
                 onPress={(_e) => { this.props.onPress() }} >
 
