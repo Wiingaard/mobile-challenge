@@ -28,38 +28,34 @@ class ExpensesTableViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        self.title = viewModel.title
         if #available(iOS 13.0, *) {
             view.backgroundColor = .systemBackground
         } else {
             view.backgroundColor = .white
         }
         
-        view.addSubview(testButton)
-        view.centerXAnchor.constraint(equalTo: testButton.centerXAnchor).isActive = true
-        view.centerYAnchor.constraint(equalTo: testButton.centerYAnchor).isActive = true
+        view.addSubview(tableView)
+        view.pinEdges(to: tableView)
         
-        testButton.rx.tap
-            .bind(to: viewModel.didScrollToBottom)
-            .disposed(by: disposeBag)
-        
-        viewModel.expenses
-            .do(onNext: { print("Expenses: \($0.count)") })
-            .drive()
+        let expenseCellNib = UINib(nibName: ExpenseTableViewCell.reuseIdentifier, bundle: nil)
+        tableView.register(expenseCellNib, forCellReuseIdentifier: ExpenseTableViewCell.reuseIdentifier)
+                
+        viewModel.expenses.asObservable()
+            .bind(to: tableView.rx.items(
+                cellIdentifier: ExpenseTableViewCell.reuseIdentifier,
+                cellType: ExpenseTableViewCell.self)) { (row, element, cell) in
+                    cell.setup(with: element)
+            }
             .disposed(by: disposeBag)
     }
     
     // MARK: - View Hierarchy
     
-    lazy var testButton: UIButton = {
-        let button = UIButton.init(type: .system)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitle("Test", for: .normal)
-        return button
-    }()
-    
     lazy var tableView: UITableView = {
         let tableView = UITableView()
+        tableView.separatorStyle = .none
+        tableView.delaysContentTouches = false
         return tableView
     }()
     

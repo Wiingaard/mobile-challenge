@@ -31,6 +31,8 @@ class ExpensesTableViewModel {
     
     // MARK: - Expense
     
+    let title = "Expenses"
+    
     lazy var expenses = expenseManager.expenses
     
     lazy var backgroundColor: UIColor = .systemGreen
