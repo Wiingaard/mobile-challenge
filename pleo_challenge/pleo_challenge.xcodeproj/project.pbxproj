@@ -12,6 +12,7 @@
 		5B8A5D982379C95B00D91E2D /* ExpensesTableViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B8A5D972379C95B00D91E2D /* ExpensesTableViewModel.swift */; };
 		5B8A5D9A2379CB0A00D91E2D /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B8A5D992379CB0A00D91E2D /* UIViewController+Extension.swift */; };
 		5B8A5D9D2379CEF500D91E2D /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B8A5D9C2379CEF500D91E2D /* UIView+Extension.swift */; };
+		5B8A5DA02379D0C500D91E2D /* ExpenseManger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B8A5D9F2379D0C500D91E2D /* ExpenseManger.swift */; };
 		5BA89E6B237987B7001DEAD1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BA89E6A237987B7001DEAD1 /* AppDelegate.swift */; };
 		5BA89E6F237987B7001DEAD1 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BA89E6E237987B7001DEAD1 /* ViewController.swift */; };
 		5BA89E74237987BA001DEAD1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5BA89E73237987BA001DEAD1 /* Assets.xcassets */; };
@@ -30,6 +31,7 @@
 		5B8A5D972379C95B00D91E2D /* ExpensesTableViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpensesTableViewModel.swift; sourceTree = "<group>"; };
 		5B8A5D992379CB0A00D91E2D /* UIViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extension.swift"; sourceTree = "<group>"; };
 		5B8A5D9C2379CEF500D91E2D /* UIView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extension.swift"; sourceTree = "<group>"; };
+		5B8A5D9F2379D0C500D91E2D /* ExpenseManger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpenseManger.swift; sourceTree = "<group>"; };
 		5BA89E67237987B7001DEAD1 /* pleo_challenge.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = pleo_challenge.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5BA89E6A237987B7001DEAD1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5BA89E6E237987B7001DEAD1 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -75,6 +77,15 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
+		5B8A5D9E2379D0B100D91E2D /* Helper */ = {
+			isa = PBXGroup;
+			children = (
+				5BA89E7E2379A26A001DEAD1 /* Networking.swift */,
+				5B8A5D9F2379D0C500D91E2D /* ExpenseManger.swift */,
+			);
+			path = Helper;
+			sourceTree = "<group>";
+		};
 		5BA89E5E237987B7001DEAD1 = {
 			isa = PBXGroup;
 			children = (
@@ -101,7 +112,7 @@
 				5B8A5D972379C95B00D91E2D /* ExpensesTableViewModel.swift */,
 				5B8A5D952379C94800D91E2D /* ExpensesTableViewController.swift */,
 				5BA89E6E237987B7001DEAD1 /* ViewController.swift */,
-				5BA89E7E2379A26A001DEAD1 /* Networking.swift */,
+				5B8A5D9E2379D0B100D91E2D /* Helper */,
 				5BAB4C1F2379B61F007DC315 /* Models */,
 				5B8A5D9B2379CB1300D91E2D /* Extensions */,
 				5BA89E73237987BA001DEAD1 /* Assets.xcassets */,
@@ -257,6 +268,7 @@
 				5BAB4C212379B62B007DC315 /* User.swift in Sources */,
 				5BA89E6B237987B7001DEAD1 /* AppDelegate.swift in Sources */,
 				5B8A5D942379C8A100D91E2D /* MainViewModel.swift in Sources */,
+				5B8A5DA02379D0C500D91E2D /* ExpenseManger.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

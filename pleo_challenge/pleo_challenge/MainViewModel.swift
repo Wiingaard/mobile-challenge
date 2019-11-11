@@ -10,12 +10,14 @@ import UIKit
 
 class MainViewModel {
     
+    private let expenseManager = ExpenseManager()
+    
     func initialViewController() -> UIViewController {
         makeExpensesTableViewController()
     }
     
     func makeExpensesTableViewController() -> UIViewController {
-        let vm = ExpensesTableViewModel()
+        let vm = ExpensesTableViewModel(expenseManager: expenseManager)
         let vc = ExpensesTableViewController.init(viewModel: vm)
         return vc.inNavigationController()
     }
