@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -11,6 +11,11 @@
 		5BA89E6F237987B7001DEAD1 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BA89E6E237987B7001DEAD1 /* ViewController.swift */; };
 		5BA89E74237987BA001DEAD1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5BA89E73237987BA001DEAD1 /* Assets.xcassets */; };
 		5BA89E77237987BA001DEAD1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5BA89E75237987BA001DEAD1 /* LaunchScreen.storyboard */; };
+		5BA89E7F2379A26A001DEAD1 /* Networking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BA89E7E2379A26A001DEAD1 /* Networking.swift */; };
+		5BAB4C1E2379A635007DC315 /* Expense.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BAB4C1D2379A635007DC315 /* Expense.swift */; };
+		5BAB4C212379B62B007DC315 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BAB4C202379B62B007DC315 /* User.swift */; };
+		5BAB4C232379B636007DC315 /* Receipt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BAB4C222379B636007DC315 /* Receipt.swift */; };
+		5BAB4C252379B646007DC315 /* Amount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BAB4C242379B646007DC315 /* Amount.swift */; };
 		C17F05A95055E5E1BEEAB17A /* Pods_pleo_challenge.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BDDA4C1F890ABA70D353CCFB /* Pods_pleo_challenge.framework */; };
 /* End PBXBuildFile section */
 
@@ -21,6 +26,11 @@
 		5BA89E73237987BA001DEAD1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5BA89E76237987BA001DEAD1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		5BA89E78237987BA001DEAD1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5BA89E7E2379A26A001DEAD1 /* Networking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Networking.swift; sourceTree = "<group>"; };
+		5BAB4C1D2379A635007DC315 /* Expense.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Expense.swift; sourceTree = "<group>"; };
+		5BAB4C202379B62B007DC315 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		5BAB4C222379B636007DC315 /* Receipt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Receipt.swift; sourceTree = "<group>"; };
+		5BAB4C242379B646007DC315 /* Amount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Amount.swift; sourceTree = "<group>"; };
 		6965FB456AA2039396A12F96 /* Pods-pleo_challenge.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-pleo_challenge.debug.xcconfig"; path = "Target Support Files/Pods-pleo_challenge/Pods-pleo_challenge.debug.xcconfig"; sourceTree = "<group>"; };
 		89EC7CFA2E2ABAE75DCDA2AD /* Pods-pleo_challenge.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-pleo_challenge.release.xcconfig"; path = "Target Support Files/Pods-pleo_challenge/Pods-pleo_challenge.release.xcconfig"; sourceTree = "<group>"; };
 		BDDA4C1F890ABA70D353CCFB /* Pods_pleo_challenge.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_pleo_challenge.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -69,11 +79,24 @@
 			children = (
 				5BA89E6A237987B7001DEAD1 /* AppDelegate.swift */,
 				5BA89E6E237987B7001DEAD1 /* ViewController.swift */,
+				5BA89E7E2379A26A001DEAD1 /* Networking.swift */,
+				5BAB4C1F2379B61F007DC315 /* Models */,
 				5BA89E73237987BA001DEAD1 /* Assets.xcassets */,
 				5BA89E75237987BA001DEAD1 /* LaunchScreen.storyboard */,
 				5BA89E78237987BA001DEAD1 /* Info.plist */,
 			);
 			path = pleo_challenge;
+			sourceTree = "<group>";
+		};
+		5BAB4C1F2379B61F007DC315 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				5BAB4C1D2379A635007DC315 /* Expense.swift */,
+				5BAB4C202379B62B007DC315 /* User.swift */,
+				5BAB4C222379B636007DC315 /* Receipt.swift */,
+				5BAB4C242379B646007DC315 /* Amount.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 		D2B02C2D7E4637193529A122 /* Pods */ = {
@@ -82,7 +105,6 @@
 				6965FB456AA2039396A12F96 /* Pods-pleo_challenge.debug.xcconfig */,
 				89EC7CFA2E2ABAE75DCDA2AD /* Pods-pleo_challenge.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -200,7 +222,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5BAB4C232379B636007DC315 /* Receipt.swift in Sources */,
+				5BAB4C1E2379A635007DC315 /* Expense.swift in Sources */,
+				5BA89E7F2379A26A001DEAD1 /* Networking.swift in Sources */,
+				5BAB4C252379B646007DC315 /* Amount.swift in Sources */,
 				5BA89E6F237987B7001DEAD1 /* ViewController.swift in Sources */,
+				5BAB4C212379B62B007DC315 /* User.swift in Sources */,
 				5BA89E6B237987B7001DEAD1 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
