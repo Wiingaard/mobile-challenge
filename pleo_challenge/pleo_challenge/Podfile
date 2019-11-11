@@ -1,0 +1,11 @@
+platform :ios, '11.0'
+
+target 'pleo_challenge' do
+  use_frameworks!
+
+  # Rx
+  pod 'RxSwift',      	    '~> 5.0'
+  pod 'RxCocoa',            '~> 5.0'
+  pod 'RxSwiftExt',         '~> 5'
+
+end
