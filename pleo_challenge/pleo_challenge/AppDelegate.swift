@@ -13,27 +13,13 @@ import RxSwift
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-    
-    let disposeBag = DisposeBag()
+    private let viewModel = MainViewModel()
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
-        let rootViewController = ViewController()
-        let navigationController = UINavigationController(rootViewController: rootViewController)
         window = UIWindow(frame: UIScreen.main.bounds)
-        window?.rootViewController = navigationController
+        window?.rootViewController = viewModel.initialViewController()
         window?.makeKeyAndVisible()
-        
-        Networking()
-            .getExpenses(limit: 10, offset: 0)
-            .subscribe(
-                onSuccess: { (expenses) in
-                    print("Success")
-            },
-                onError: { error in
-                    print("Error: \(error)")
-            })
-            .disposed(by: disposeBag)
         
         return true
     }
