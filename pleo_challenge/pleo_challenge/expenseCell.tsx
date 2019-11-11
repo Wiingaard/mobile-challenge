@@ -3,6 +3,7 @@ import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { Expense } from './networking';
 import { bodyPrimary, bodySecondary } from './styles/textStyles';
 import { dateFormatted } from './date';
+import { whiteRoundedCard } from './styles/cardStyles';
 
 export interface Props {
     expense: Expense
@@ -12,19 +13,20 @@ export interface Props {
 export default class ExpenseCell extends Component<Props> {
     render() {
         return (
-            <TouchableOpacity onPress={() => this.props.onPress(this.props.expense) }>
-                <View style={styles.cell}>
-                    <View style={[styles.circle, { backgroundColor: colorForCurrency(this.props.expense.amount.currency) }]} />
-                    <View style={styles.container}>
-                        <View style={styles.primaryTextContainer}>
-                            <Text style={bodyPrimary}>{this.props.expense.user.first}</Text>
-                            <Text style={bodyPrimary}>{this.props.expense.amount.value + " " + this.props.expense.amount.currency}</Text>
+            <TouchableOpacity onPress={() => this.props.onPress(this.props.expense)}>
+                <View style={whiteRoundedCard}>
+                    <View style={styles.cell}>
+                        <View style={[styles.circle, { backgroundColor: colorForCurrency(this.props.expense.amount.currency) }]} />
+                        <View style={styles.container}>
+                            <View style={styles.primaryTextContainer}>
+                                <Text style={bodyPrimary}>{this.props.expense.user.first}</Text>
+                                <Text style={bodyPrimary}>{this.props.expense.amount.value + " " + this.props.expense.amount.currency}</Text>
+                            </View>
+                            <Text style={bodySecondary}>{dateFormatted(this.props.expense.date)}</Text>
                         </View>
-                        <Text style={bodySecondary}>{dateFormatted(this.props.expense.date)}</Text>
                     </View>
                 </View>
             </TouchableOpacity>
-
         )
     }
 }
@@ -52,8 +54,8 @@ const styles = StyleSheet.create({
         borderRadius: 20
     },
     primaryTextContainer: {
-        flexDirection: "row", 
-        justifyContent: "space-between" 
+        flexDirection: "row",
+        justifyContent: "space-between"
     },
     container: {
         flex: 1,
