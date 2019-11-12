@@ -30,6 +30,7 @@
 		5B8A5DC0237AFD4100D91E2D /* RoundFlatButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B8A5DBF237AFD4100D91E2D /* RoundFlatButton.swift */; };
 		5B8A5DC2237B263400D91E2D /* ExpenseReceiptViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B8A5DC1237B263400D91E2D /* ExpenseReceiptViewController.swift */; };
 		5B8A5DC4237B264800D91E2D /* ExpenseReceiptViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B8A5DC3237B264800D91E2D /* ExpenseReceiptViewModel.swift */; };
+		5B8A5DC6237B311A00D91E2D /* ImageHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B8A5DC5237B311A00D91E2D /* ImageHelper.swift */; };
 		5BA89E6B237987B7001DEAD1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BA89E6A237987B7001DEAD1 /* AppDelegate.swift */; };
 		5BA89E6F237987B7001DEAD1 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BA89E6E237987B7001DEAD1 /* ViewController.swift */; };
 		5BA89E74237987BA001DEAD1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5BA89E73237987BA001DEAD1 /* Assets.xcassets */; };
@@ -66,6 +67,7 @@
 		5B8A5DBF237AFD4100D91E2D /* RoundFlatButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundFlatButton.swift; sourceTree = "<group>"; };
 		5B8A5DC1237B263400D91E2D /* ExpenseReceiptViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpenseReceiptViewController.swift; sourceTree = "<group>"; };
 		5B8A5DC3237B264800D91E2D /* ExpenseReceiptViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpenseReceiptViewModel.swift; sourceTree = "<group>"; };
+		5B8A5DC5237B311A00D91E2D /* ImageHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageHelper.swift; sourceTree = "<group>"; };
 		5BA89E67237987B7001DEAD1 /* pleo_challenge.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = pleo_challenge.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5BA89E6A237987B7001DEAD1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5BA89E6E237987B7001DEAD1 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -118,6 +120,7 @@
 			isa = PBXGroup;
 			children = (
 				5BA89E7E2379A26A001DEAD1 /* Networking.swift */,
+				5B8A5DC5237B311A00D91E2D /* ImageHelper.swift */,
 				5B8A5DBF237AFD4100D91E2D /* RoundFlatButton.swift */,
 				5B8A5D9F2379D0C500D91E2D /* ExpenseManger.swift */,
 				5B8A5DA62379F2C600D91E2D /* CardStyle.swift */,
@@ -335,6 +338,7 @@
 				5B8A5DAB2379FDF700D91E2D /* UIColor+Extension.swift in Sources */,
 				5BAB4C232379B636007DC315 /* Receipt.swift in Sources */,
 				5B8A5DAD237ACDD800D91E2D /* ExpenseDetailViewController.swift in Sources */,
+				5B8A5DC6237B311A00D91E2D /* ImageHelper.swift in Sources */,
 				5B8A5DBC237AF77900D91E2D /* ExpenseCommentViewController.swift in Sources */,
 				5B8A5D962379C94800D91E2D /* ExpensesTableViewController.swift in Sources */,
 				5BAB4C1E2379A635007DC315 /* Expense.swift in Sources */,
