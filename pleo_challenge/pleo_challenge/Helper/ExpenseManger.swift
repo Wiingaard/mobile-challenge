@@ -12,29 +12,68 @@ import RxCocoa
 
 class ExpenseManager {
     
-    private var page = BehaviorRelay<Int>.init(value: 0)
-    private static let pageSize = 10
+    // MARK: - Init
+    
+    private var load = BehaviorRelay<PageParameters>.init(value: .first)
+    private var loadingPage = false
+    private static let pageSize = 25
+    private var maximumLoadedExpenseIndex: Int = 0
+    
     private let networking = Networking()
     
+    // MARK: - Get Expenses
+    
     lazy var expenses: Driver<[Expense]> = {
-        return page
+        return load
             .flatMapLatest(getExpensesPage)
             .scan([], accumulator: +)
             .asDriver(onErrorDriveWith: .empty())
     }()
     
-    lazy var getExpensesPage: (Int) -> Observable<[Expense]> = { [weak self] page -> Observable<[Expense]> in
+    private lazy var getExpensesPage: (PageParameters) -> Observable<[Expense]> = { [weak self] params -> Observable<[Expense]> in
         guard let network = self?.networking else { return .empty() }
-        let params = ExpenseManager.pageParameters(page: page)
-        return network.getExpenses(limit: params.limit, offset: params.offset).asObservable()
+        return network
+            .getExpenses(limit: params.limit, offset: params.offset)
+            .do(onSuccess: {
+                if $0.isEmpty {
+                    self?.noResultsAt = Date()
+                } else {
+                    self?.noResultsAt = nil
+                }
+            })
+            .do(onSuccess: {
+                let maxIndex = $0.compactMap { $0.index }.max() ?? self?.maximumLoadedExpenseIndex
+                guard let max = maxIndex else { return }
+                self?.maximumLoadedExpenseIndex = max
+            })
+            .asObservable()
+            .do(onNext: { _ in self?.loadingPage = false },
+                onSubscribe: { self?.loadingPage = true }
+        )
     }
     
-    func loadNextPage() {
-        page.accept(page.value + 1)
+    // MARK: - Determind next page
+    
+    func loadNextPageIfReady() {
+        guard !loadingPage else { return }
+        guard ignoreIfNoResultsFoundRecently() else { return }
+        
+        let nextPage = PageParameters.init(offset: maximumLoadedExpenseIndex + 1, limit: ExpenseManager.pageSize)
+        load.accept(nextPage)
     }
     
-    static func pageParameters(page: Int) -> (limit: Int, offset: Int) {
-        return (limit: pageSize, offset: page * pageSize)
+    private struct PageParameters {
+        let offset: Int
+        let limit: Int
+        
+        static let first = PageParameters(offset: 0, limit: ExpenseManager.pageSize)
     }
     
+    private lazy var noResultsAt: Date? = nil
+    
+    private lazy var ignoreIfNoResultsFoundRecently: () -> Bool = { [weak self] () -> Bool in
+        guard let foundNoResultsAt = self?.noResultsAt else { return true }
+        let ignoreIf = foundNoResultsAt.timeIntervalSinceNow < -5
+        return ignoreIf
+    }
 }

@@ -15,26 +15,28 @@ class ExpensesTableViewModel {
     // MARK: - Init
     
     private let expenseManager: ExpenseManager
-    private let disposeBag = DisposeBag()
     
     init(expenseManager: ExpenseManager) {
         self.expenseManager = expenseManager
-        
-        didScrollToBottom
-            .subscribe(onNext: { [weak self] in self?.expenseManager.loadNextPage() })
-            .disposed(by: disposeBag)
     }
     
     // MARK: - Inputs
     
-    let didScrollToBottom = PublishSubject<Void>()
+    func didScrollCloseToBottom(_ isClose: Bool) {
+        guard isClose else { return }
+        expenseManager.loadNextPageIfReady()
+    }
     
-    // MARK: - Expense
+    // MARK: - Output
     
     let title = "Expenses"
     
-    lazy var expenses = expenseManager.expenses
+    lazy var expenses = {
+        expenseManager.expenses
+            .do(onNext: { [weak self] _ in self?._loadingExpenses.onNext(false) })
+    }()
     
-    lazy var backgroundColor: UIColor = .systemGreen
+    lazy var _loadingExpenses = BehaviorSubject<Bool>.init(value: true)
+    lazy var showLoadingIndicator: Driver<Bool> = _loadingExpenses.distinctUntilChanged().asDriver(onErrorDriveWith: .empty())
     
 }

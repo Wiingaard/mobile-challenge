@@ -9,12 +9,13 @@
 import Foundation
 
 struct Expense: Codable {
-     let id: String
-     let amount: Amount
-     let date: Date
-     let merchant: String
-     let receipts: [Receipt]
-     let comment: String
-     let category: String
-     let user: User
+    let id: String
+    let amount: Amount
+    let date: Date
+    let merchant: String
+    let receipts: [Receipt]
+    let comment: String
+    let category: String
+    let user: User
+    let index: Int?
 }
