@@ -102,9 +102,15 @@ class ExpenseManager {
             .do(onSuccess: { [weak self] in self?.didUpdateExpense.onNext($0) })
     }
     
+    func updateExpenseReceiptImage(id: String, image: UIImage) -> Single<Expense> {
+        networking
+            .postExpenseReceiptImage(id: id, image: image)
+            .do(onSuccess: { [weak self] in self?.didUpdateExpense.onNext($0) })
+    }
+    
     private let didUpdateExpense = PublishSubject<Expense>()
     
-    lazy var syncWithExpenseUpdate: ([Expense]) -> Observable<[Expense]> = { [weak self] expenses -> Observable<[Expense]> in
+    private lazy var syncWithExpenseUpdate: ([Expense]) -> Observable<[Expense]> = { [weak self] expenses -> Observable<[Expense]> in
         let passthrough = Observable.just(expenses)
         
         let expenseUpdate = self?.didUpdateExpense.map { updatedExpense -> [Expense] in

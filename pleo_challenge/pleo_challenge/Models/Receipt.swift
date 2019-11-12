@@ -9,5 +9,5 @@
 import Foundation
 
 struct Receipt: Codable, Equatable {
-    
+    let url: String
 }
