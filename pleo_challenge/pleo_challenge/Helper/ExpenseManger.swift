@@ -52,6 +52,22 @@ class ExpenseManager {
         )
     }
     
+    func getExpense(id: String) -> Observable<Expense?> {
+        return expenses
+            .map { $0.first { expense in expense.id == id } }
+            .asObservable()
+            .flatMapLatest { [weak self] expense -> Observable<Expense?> in
+                if let expense = expense {
+                    return .just(expense)
+                } else {
+                    return self?.networking.getExpense(id: id)
+                        .asObservable()
+                        .map(Optional.init)
+                        ?? .just(nil)
+                }
+        }
+    }
+    
     // MARK: - Determind next page
     
     func loadNextPageIfReady() {

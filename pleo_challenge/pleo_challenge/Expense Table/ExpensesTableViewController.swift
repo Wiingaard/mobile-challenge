@@ -71,9 +71,22 @@ class ExpensesTableViewController: UIViewController {
             }
             .disposed(by: disposeBag)
         
+        tableView.rx.modelSelected(Expense.self)
+            .bind(to: viewModel.didSelectExpense)
+            .disposed(by: disposeBag)
+        
         // Loading indicator
         viewModel.showLoadingIndicator
             .drive(activityIndicatorView.rx.isAnimating)
+            .disposed(by: disposeBag)
+        
+        // Present Expense Detail
+        viewModel.presentExpenseDetail
+            .observeOn(MainScheduler.instance)
+            .subscribe(onNext: { [weak self] in
+                let vc = ExpenseDetailViewController.init(viewModel: $0)
+                self?.navigationController?.pushViewController(vc, animated: true)
+            })
             .disposed(by: disposeBag)
     }
     

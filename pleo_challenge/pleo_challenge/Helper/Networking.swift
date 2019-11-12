@@ -26,6 +26,11 @@ class Networking {
         return request.map { $0.expenses }
     }
     
+    func getExpense(id: String) -> Single<Expense> {
+        let query = "/expenses/\(id)"
+        return Networking.request(query: query)
+    }
+    
     // MARK: - Generic Helper
     
     private static func request<T: Codable>(query: String) -> Single<T> {

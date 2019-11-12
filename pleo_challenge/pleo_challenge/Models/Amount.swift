@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct Amount: Codable {
+struct Amount: Codable, Equatable {
     let value: String
     let currency: String
 }

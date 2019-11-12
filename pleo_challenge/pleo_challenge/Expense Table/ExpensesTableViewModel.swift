@@ -27,6 +27,8 @@ class ExpensesTableViewModel {
         expenseManager.loadNextPageIfReady()
     }
     
+    let didSelectExpense = PublishSubject<Expense>()
+    
     // MARK: - Output
     
     let title = "Expenses"
@@ -38,5 +40,13 @@ class ExpensesTableViewModel {
     
     lazy var _loadingExpenses = BehaviorSubject<Bool>.init(value: true)
     lazy var showLoadingIndicator: Driver<Bool> = _loadingExpenses.distinctUntilChanged().asDriver(onErrorDriveWith: .empty())
+    
+    lazy var presentExpenseDetail: Observable<ExpenseDetailViewModel> = {
+        return didSelectExpense
+            .flatMapLatest { [weak self] expense -> Observable<ExpenseDetailViewModel> in
+                guard let expenseManager = self?.expenseManager else { return .empty() }
+                return .just(ExpenseDetailViewModel(expense: expense, expenseManager: expenseManager))
+        }
+    }()
     
 }

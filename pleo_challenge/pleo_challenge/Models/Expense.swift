@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct Expense: Codable {
+struct Expense: Codable, Equatable {
     let id: String
     let amount: Amount
     let date: Date

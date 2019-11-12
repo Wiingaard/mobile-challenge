@@ -18,6 +18,8 @@
 		5B8A5DA72379F2C600D91E2D /* CardStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B8A5DA62379F2C600D91E2D /* CardStyle.swift */; };
 		5B8A5DA92379F3E500D91E2D /* DateFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B8A5DA82379F3E500D91E2D /* DateFormat.swift */; };
 		5B8A5DAB2379FDF700D91E2D /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B8A5DAA2379FDF700D91E2D /* UIColor+Extension.swift */; };
+		5B8A5DAD237ACDD800D91E2D /* ExpenseDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B8A5DAC237ACDD800D91E2D /* ExpenseDetailViewController.swift */; };
+		5B8A5DAF237ACDE300D91E2D /* ExpenseDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B8A5DAE237ACDE300D91E2D /* ExpenseDetailViewModel.swift */; };
 		5BA89E6B237987B7001DEAD1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BA89E6A237987B7001DEAD1 /* AppDelegate.swift */; };
 		5BA89E6F237987B7001DEAD1 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BA89E6E237987B7001DEAD1 /* ViewController.swift */; };
 		5BA89E74237987BA001DEAD1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5BA89E73237987BA001DEAD1 /* Assets.xcassets */; };
@@ -42,6 +44,8 @@
 		5B8A5DA62379F2C600D91E2D /* CardStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardStyle.swift; sourceTree = "<group>"; };
 		5B8A5DA82379F3E500D91E2D /* DateFormat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFormat.swift; sourceTree = "<group>"; };
 		5B8A5DAA2379FDF700D91E2D /* UIColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
+		5B8A5DAC237ACDD800D91E2D /* ExpenseDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpenseDetailViewController.swift; sourceTree = "<group>"; };
+		5B8A5DAE237ACDE300D91E2D /* ExpenseDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpenseDetailViewModel.swift; sourceTree = "<group>"; };
 		5BA89E67237987B7001DEAD1 /* pleo_challenge.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = pleo_challenge.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5BA89E6A237987B7001DEAD1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5BA89E6E237987B7001DEAD1 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -110,6 +114,15 @@
 			path = "Expense Table";
 			sourceTree = "<group>";
 		};
+		5B8A5DB0237ACDEB00D91E2D /* Expense Detail */ = {
+			isa = PBXGroup;
+			children = (
+				5B8A5DAE237ACDE300D91E2D /* ExpenseDetailViewModel.swift */,
+				5B8A5DAC237ACDD800D91E2D /* ExpenseDetailViewController.swift */,
+			);
+			path = "Expense Detail";
+			sourceTree = "<group>";
+		};
 		5BA89E5E237987B7001DEAD1 = {
 			isa = PBXGroup;
 			children = (
@@ -134,6 +147,7 @@
 				5BA89E6A237987B7001DEAD1 /* AppDelegate.swift */,
 				5BA89E6E237987B7001DEAD1 /* ViewController.swift */,
 				5B8A5D932379C8A100D91E2D /* MainViewModel.swift */,
+				5B8A5DB0237ACDEB00D91E2D /* Expense Detail */,
 				5B8A5DA52379ECC300D91E2D /* Expense Table */,
 				5B8A5D9E2379D0B100D91E2D /* Helper */,
 				5BAB4C1F2379B61F007DC315 /* Models */,
@@ -286,9 +300,11 @@
 				5B8A5DA32379ECB600D91E2D /* ExpenseTableViewCell.swift in Sources */,
 				5B8A5DAB2379FDF700D91E2D /* UIColor+Extension.swift in Sources */,
 				5BAB4C232379B636007DC315 /* Receipt.swift in Sources */,
+				5B8A5DAD237ACDD800D91E2D /* ExpenseDetailViewController.swift in Sources */,
 				5B8A5D962379C94800D91E2D /* ExpensesTableViewController.swift in Sources */,
 				5BAB4C1E2379A635007DC315 /* Expense.swift in Sources */,
 				5BA89E7F2379A26A001DEAD1 /* Networking.swift in Sources */,
+				5B8A5DAF237ACDE300D91E2D /* ExpenseDetailViewModel.swift in Sources */,
 				5B8A5DA72379F2C600D91E2D /* CardStyle.swift in Sources */,
 				5B8A5D9D2379CEF500D91E2D /* UIView+Extension.swift in Sources */,
 				5BAB4C252379B646007DC315 /* Amount.swift in Sources */,

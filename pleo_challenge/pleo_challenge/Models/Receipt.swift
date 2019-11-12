@@ -8,6 +8,6 @@
 
 import Foundation
 
-struct Receipt: Codable {
+struct Receipt: Codable, Equatable {
     
 }
