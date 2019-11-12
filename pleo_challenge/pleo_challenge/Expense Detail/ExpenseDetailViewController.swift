@@ -21,11 +21,7 @@ class ExpenseDetailViewController: UIViewController {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
         
-        if #available(iOS 13.0, *) {
-            view.backgroundColor = .systemBackground
-        } else {
-            view.backgroundColor = .white
-        }
+        view.backgroundColor = .background
         
         setupSupviews()
         subscribeToViewModel()
@@ -38,33 +34,23 @@ class ExpenseDetailViewController: UIViewController {
     // MARK: - Setup
     
     func setupSupviews() {
-        view.addSubview(nameLabel)
-        view.centerXAnchor.constraint(equalTo: nameLabel.centerXAnchor).isActive = true
-        view.centerYAnchor.constraint(equalTo: nameLabel.centerYAnchor).isActive = true
         
-        view.addSubview(activityIndicatorView)
-        view.centerXAnchor.constraint(equalTo: activityIndicatorView.centerXAnchor).isActive = true
-        view.centerYAnchor.constraint(equalTo: activityIndicatorView.centerYAnchor).isActive = true
+        view.addSubview(contentStackView)
+        view.leadingAnchor.constraint(equalTo: contentStackView.leadingAnchor, constant: -16).isActive = true
+        view.trailingAnchor.constraint(equalTo: contentStackView.trailingAnchor, constant: 16).isActive = true
+        view.safeAreaLayoutGuide.topAnchor.constraint(equalTo: contentStackView.topAnchor, constant: -16).isActive = true
         
+        let expenseCardVc = ExpenseCardViewController.init(viewModel: viewModel.expenseCardViewModel)
+        displayContent(viewController: expenseCardVc, in: cardExpenseContainerView)
     }
     
     private func subscribeToViewModel() {
         viewModel.loadingExpense
             .drive(activityIndicatorView.rx.isAnimating)
             .disposed(by: disposeBag)
-        
-        viewModel.userName
-            .drive(nameLabel.rx.text)
-            .disposed(by: disposeBag)
     }
     
     // MARK: - View hierarchy
-    
-    lazy var nameLabel: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
     
     lazy var activityIndicatorView: UIActivityIndicatorView = {
         let activityIndicator = UIActivityIndicatorView.init(style: .gray)
@@ -73,4 +59,10 @@ class ExpenseDetailViewController: UIViewController {
         activityIndicator.startAnimating()
         return activityIndicator
     }()
+    
+    lazy var contentStackView = UIStackView.make([cardExpenseContainerView, cardCommentContainerView], spacing: 24)
+    
+    private let cardExpenseContainerView = UIView.make()
+    private let cardCommentContainerView = UIView.make(height: 120, color: .systemGreen)
+    
 }

@@ -14,6 +14,14 @@ extension UIColor {
     static let pleoOrange = UIColor(0xee9456)
     static let pleoBlue = UIColor(0x78ccf7)
     static let pleoRed = UIColor(0xe85e5a)
+    
+    static var background: UIColor {
+        if #available(iOS 13.0, *) {
+            return .systemBackground
+        } else {
+            return .white
+        }
+    }
 
     convenience init(red: Int, green: Int, blue: Int) {
         assert(red >= 0 && red <= 255, "Invalid red component")

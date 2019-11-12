@@ -23,4 +23,17 @@ extension UIView {
         return constraints
     }
     
+    static func make(height: CGFloat? = nil, width: CGFloat? = nil, color: UIColor = .clear) -> UIView {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = color
+        if let width = width {
+            view.widthAnchor.constraint(equalToConstant: width).isActive = true
+        }
+        if let height = height {
+            view.heightAnchor.constraint(equalToConstant: height).isActive = true
+        }
+        return view
+    }
+    
 }

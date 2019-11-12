@@ -30,17 +30,17 @@ class ExpenseTableViewCell: UITableViewCell {
         if #available(iOS 13.0, *) {
             cardView.backgroundColor = highlighted ? .groupTableViewBackground : .systemBackground
         } else {
-            cardView.backgroundColor = highlighted ? .white : UIColor.init(white: 0.95, alpha: 1)
+            cardView.backgroundColor = highlighted ? UIColor.init(white: 0.95, alpha: 1) : .white
         }
     }
     
     func setup(with expense: Expense) {
         nameLabel.text = expense.user.first + " " + expense.user.last
-        nameLabel.font = .systemFont(ofSize: 15, weight: .medium)
+        nameLabel.font = Font.body
         amountLabel.text = expense.amount.value + " " + expense.amount.currency
-        amountLabel.font = .systemFont(ofSize: 15, weight: .medium)
+        amountLabel.font = Font.body
         dateLabel.text = DateFormat.date(expense.date)
-        dateLabel.font = .systemFont(ofSize: 12, weight: .regular)
+        dateLabel.font = Font.bodySmall
         circleView.backgroundColor = color(for: expense.amount.currency)
     }
     

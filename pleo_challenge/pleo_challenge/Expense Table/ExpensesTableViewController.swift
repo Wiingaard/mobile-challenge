@@ -32,11 +32,7 @@ class ExpensesTableViewController: UIViewController {
         super.viewDidLoad()
         self.title = viewModel.title
         
-        if #available(iOS 13.0, *) {
-            view.backgroundColor = .systemBackground
-        } else {
-            view.backgroundColor = .white
-        }
+        view.backgroundColor = .background
         
         setupSupviews()
         subscribeToViewModel()
@@ -72,6 +68,7 @@ class ExpensesTableViewController: UIViewController {
             .disposed(by: disposeBag)
         
         tableView.rx.modelSelected(Expense.self)
+            .observeOn(MainScheduler.asyncInstance)
             .bind(to: viewModel.didSelectExpense)
             .disposed(by: disposeBag)
         

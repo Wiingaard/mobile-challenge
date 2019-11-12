@@ -61,10 +61,6 @@ class ExpenseDetailViewModel {
     private let _loadingExpense = BehaviorSubject<Bool>.init(value: true)
     lazy var loadingExpense = _loadingExpense.asDriver(onErrorDriveWith: .empty())
     
-    lazy var userName: Driver<String> = {
-        return expense
-            .map { $0.user.first + " " + $0.user.last }
-            .asDriver(onErrorDriveWith: .empty())
-    }()
+    lazy var expenseCardViewModel = ExpenseCardViewModel.init(expense: expense)
     
 }
