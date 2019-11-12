@@ -63,5 +63,6 @@ class ExpenseDetailViewModel {
     
     lazy var expenseCardViewModel = ExpenseCardViewModel.init(expense: expense)
     lazy var expenseCommentViewModel = ExpenseCommentViewModel.init(expense: expense, expenseManager: expenseManager)
+    lazy var expenseReceiptViewModel = ExpenseReceiptViewModel.init(expense: expense, expenseManager: expenseManager)
     
 }
