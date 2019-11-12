@@ -27,6 +27,7 @@ class ExpenseManager {
         return load
             .flatMapLatest(getExpensesPage)
             .scan([], accumulator: +)
+            .flatMapLatest(syncWithExpenseUpdate)
             .asDriver(onErrorDriveWith: .empty())
     }()
     
@@ -91,5 +92,25 @@ class ExpenseManager {
         guard let foundNoResultsAt = self?.noResultsAt else { return true }
         let ignoreIf = foundNoResultsAt.timeIntervalSinceNow < -5
         return ignoreIf
+    }
+    
+    // MARK: - Update Expense
+    
+    func updateExpenseComment(id: String, comment: String) -> Single<Expense> {
+        networking
+            .postExpenseComment(id: id, comment: comment)
+            .do(onSuccess: { [weak self] in self?.didUpdateExpense.onNext($0) })
+    }
+    
+    private let didUpdateExpense = PublishSubject<Expense>()
+    
+    lazy var syncWithExpenseUpdate: ([Expense]) -> Observable<[Expense]> = { [weak self] expenses -> Observable<[Expense]> in
+        let passthrough = Observable.just(expenses)
+        
+        let expenseUpdate = self?.didUpdateExpense.map { updatedExpense -> [Expense] in
+            expenses.map { $0.id == updatedExpense.id ? updatedExpense : $0 }
+        } ?? .empty()
+        
+        return Observable.merge(passthrough, expenseUpdate)
     }
 }

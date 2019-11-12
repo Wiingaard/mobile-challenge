@@ -51,21 +51,44 @@ class ExpenseCommentViewController: UIViewController {
         viewModel.commentText.drive(textView.rx.text).disposed(by: disposeBag)
         viewModel.isSaveButtonEnabled.drive(saveButton.rx.isEnabled).disposed(by: disposeBag)
         
+        viewModel.presentAlert
+            .observeOn(MainScheduler.instance)
+            .subscribe(onNext: { [weak self] in
+                self?.present($0, animated: true, completion: nil)
+            }).disposed(by: disposeBag)
+        
+        viewModel.didFinishEditingComment
+            .observeOn(MainScheduler.instance)
+            .subscribe(onNext: { [weak self] in
+                self?.view.endEditing(false)
+            }).disposed(by: disposeBag)
+        
         // Input to View Model
         textView.rx.text.bind(to: viewModel.textDidChange).disposed(by: disposeBag)
+        saveButton.rx.tap.bind(to: viewModel.savePressed).disposed(by: disposeBag)
     }
     
     // MARK: - View hierarchy
     
-    private lazy var mainStackView = UIStackView.make([titleLabel, textView, saveButton], spacing: 16)
-    
+    private lazy var mainStackView = UIStackView.make([titleLabel, textView, saveButtonContainer], spacing: 16)
     private lazy var titleLabel = UILabel.make(Font.title, text: "Comment")
     private lazy var saveButton = RoundFlatButton.make(title: "Save", color: .pleoGreen)
+    
+    /// This view is needed to be able to freely place `saveButton` inside `mainStackView`
+    private lazy var saveButtonContainer: UIView = {
+        let view = UIView.make()
+        view.addSubview(saveButton)
+        view.topAnchor.constraint(equalTo: saveButton.topAnchor).isActive = true
+        view.bottomAnchor.constraint(equalTo: saveButton.bottomAnchor).isActive = true
+        view.leadingAnchor.constraint(equalTo: saveButton.leadingAnchor).isActive = true
+        return view
+    }()
     
     private lazy var textView: UITextView = {
         let textView = UITextView.init()
         textView.translatesAutoresizingMaskIntoConstraints = false
-        textView.heightAnchor.constraint(equalToConstant: 120).isActive = true
+        textView.heightAnchor.constraint(greaterThanOrEqualToConstant: 40).isActive = true
+        textView.isScrollEnabled = false
         textView.font = Font.body
         textView.textContainerInset = .zero
         textView.textContainer.lineFragmentPadding = 0
