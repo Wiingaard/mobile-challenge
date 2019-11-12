@@ -25,6 +25,9 @@
 		5B8A5DB6237AE64F00D91E2D /* Font.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B8A5DB5237AE64F00D91E2D /* Font.swift */; };
 		5B8A5DB8237AE7EE00D91E2D /* UILabel+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B8A5DB7237AE7EE00D91E2D /* UILabel+Extension.swift */; };
 		5B8A5DBA237AEFC500D91E2D /* UIStackView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B8A5DB9237AEFC500D91E2D /* UIStackView+Extension.swift */; };
+		5B8A5DBC237AF77900D91E2D /* ExpenseCommentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B8A5DBB237AF77900D91E2D /* ExpenseCommentViewController.swift */; };
+		5B8A5DBE237AF79200D91E2D /* ExpenseCommentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B8A5DBD237AF79200D91E2D /* ExpenseCommentViewModel.swift */; };
+		5B8A5DC0237AFD4100D91E2D /* RoundFlatButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B8A5DBF237AFD4100D91E2D /* RoundFlatButton.swift */; };
 		5BA89E6B237987B7001DEAD1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BA89E6A237987B7001DEAD1 /* AppDelegate.swift */; };
 		5BA89E6F237987B7001DEAD1 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BA89E6E237987B7001DEAD1 /* ViewController.swift */; };
 		5BA89E74237987BA001DEAD1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5BA89E73237987BA001DEAD1 /* Assets.xcassets */; };
@@ -56,6 +59,9 @@
 		5B8A5DB5237AE64F00D91E2D /* Font.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Font.swift; sourceTree = "<group>"; };
 		5B8A5DB7237AE7EE00D91E2D /* UILabel+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+Extension.swift"; sourceTree = "<group>"; };
 		5B8A5DB9237AEFC500D91E2D /* UIStackView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStackView+Extension.swift"; sourceTree = "<group>"; };
+		5B8A5DBB237AF77900D91E2D /* ExpenseCommentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpenseCommentViewController.swift; sourceTree = "<group>"; };
+		5B8A5DBD237AF79200D91E2D /* ExpenseCommentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpenseCommentViewModel.swift; sourceTree = "<group>"; };
+		5B8A5DBF237AFD4100D91E2D /* RoundFlatButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundFlatButton.swift; sourceTree = "<group>"; };
 		5BA89E67237987B7001DEAD1 /* pleo_challenge.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = pleo_challenge.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5BA89E6A237987B7001DEAD1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5BA89E6E237987B7001DEAD1 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -108,6 +114,7 @@
 			isa = PBXGroup;
 			children = (
 				5BA89E7E2379A26A001DEAD1 /* Networking.swift */,
+				5B8A5DBF237AFD4100D91E2D /* RoundFlatButton.swift */,
 				5B8A5D9F2379D0C500D91E2D /* ExpenseManger.swift */,
 				5B8A5DA62379F2C600D91E2D /* CardStyle.swift */,
 				5B8A5DB5237AE64F00D91E2D /* Font.swift */,
@@ -134,6 +141,8 @@
 				5B8A5DAC237ACDD800D91E2D /* ExpenseDetailViewController.swift */,
 				5B8A5DB3237AE46700D91E2D /* ExpenseCardViewModel.swift */,
 				5B8A5DB1237AE42300D91E2D /* ExpenseCardViewController.swift */,
+				5B8A5DBD237AF79200D91E2D /* ExpenseCommentViewModel.swift */,
+				5B8A5DBB237AF77900D91E2D /* ExpenseCommentViewController.swift */,
 			);
 			path = "Expense Detail";
 			sourceTree = "<group>";
@@ -319,10 +328,13 @@
 				5B8A5DAB2379FDF700D91E2D /* UIColor+Extension.swift in Sources */,
 				5BAB4C232379B636007DC315 /* Receipt.swift in Sources */,
 				5B8A5DAD237ACDD800D91E2D /* ExpenseDetailViewController.swift in Sources */,
+				5B8A5DBC237AF77900D91E2D /* ExpenseCommentViewController.swift in Sources */,
 				5B8A5D962379C94800D91E2D /* ExpensesTableViewController.swift in Sources */,
 				5BAB4C1E2379A635007DC315 /* Expense.swift in Sources */,
 				5BA89E7F2379A26A001DEAD1 /* Networking.swift in Sources */,
+				5B8A5DC0237AFD4100D91E2D /* RoundFlatButton.swift in Sources */,
 				5B8A5DAF237ACDE300D91E2D /* ExpenseDetailViewModel.swift in Sources */,
+				5B8A5DBE237AF79200D91E2D /* ExpenseCommentViewModel.swift in Sources */,
 				5B8A5DB6237AE64F00D91E2D /* Font.swift in Sources */,
 				5B8A5DA72379F2C600D91E2D /* CardStyle.swift in Sources */,
 				5B8A5D9D2379CEF500D91E2D /* UIView+Extension.swift in Sources */,

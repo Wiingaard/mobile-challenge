@@ -10,11 +10,14 @@ import UIKit
 
 extension UILabel {
     
-    static func make(_ font: UIFont, text: String? = nil, horizontalHugging: Bool? = nil) -> UILabel {
+    static func make(_ font: UIFont, textColor: UIColor? = nil, text: String? = nil, horizontalHugging: Bool? = nil) -> UILabel {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = font
         label.text = text
+        if let color = textColor {
+            label.textColor = color
+        }
         if let isHugging = horizontalHugging {
             let priority = isHugging ? UILayoutPriority(248) : UILayoutPriority(252)
             label.setContentHuggingPriority(priority, for: .horizontal)

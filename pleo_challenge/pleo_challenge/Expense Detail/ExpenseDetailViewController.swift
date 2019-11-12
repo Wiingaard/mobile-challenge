@@ -42,6 +42,9 @@ class ExpenseDetailViewController: UIViewController {
         
         let expenseCardVc = ExpenseCardViewController.init(viewModel: viewModel.expenseCardViewModel)
         displayContent(viewController: expenseCardVc, in: cardExpenseContainerView)
+        
+        let expenseCommentVc = ExpenseCommentViewController.init(viewModel: viewModel.expenseCommentViewModel)
+        displayContent(viewController: expenseCommentVc, in: cardCommentContainerView)
     }
     
     private func subscribeToViewModel() {
@@ -63,6 +66,6 @@ class ExpenseDetailViewController: UIViewController {
     lazy var contentStackView = UIStackView.make([cardExpenseContainerView, cardCommentContainerView], spacing: 24)
     
     private let cardExpenseContainerView = UIView.make()
-    private let cardCommentContainerView = UIView.make(height: 120, color: .systemGreen)
+    private let cardCommentContainerView = UIView.make()
     
 }

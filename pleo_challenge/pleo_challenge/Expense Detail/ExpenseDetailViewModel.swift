@@ -62,5 +62,6 @@ class ExpenseDetailViewModel {
     lazy var loadingExpense = _loadingExpense.asDriver(onErrorDriveWith: .empty())
     
     lazy var expenseCardViewModel = ExpenseCardViewModel.init(expense: expense)
+    lazy var expenseCommentViewModel = ExpenseCommentViewModel.init(expense: expense, expenseManager: expenseManager)
     
 }
