@@ -21,6 +21,7 @@ class ExpenseDetailViewController: UIViewController {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
         
+        navigationItem.largeTitleDisplayMode = .never
         view.backgroundColor = .background
         
         setupSupviews()

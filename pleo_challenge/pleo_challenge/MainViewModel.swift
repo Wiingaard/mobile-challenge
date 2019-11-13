@@ -19,7 +19,7 @@ class MainViewModel {
     func makeExpensesTableViewController() -> UIViewController {
         let vm = ExpensesTableViewModel(expenseManager: expenseManager)
         let vc = ExpensesTableViewController.init(viewModel: vm)
-        return vc.inNavigationController()
+        return vc.inNavigationController(barTintColor: .black)
     }
     
 }

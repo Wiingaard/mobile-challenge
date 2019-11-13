@@ -30,9 +30,10 @@ class ExpensesTableViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = viewModel.title
-        
         view.backgroundColor = .background
+        title = viewModel.title
+        navigationController?.navigationBar.prefersLargeTitles = true
+        navigationItem.largeTitleDisplayMode = .always
         
         setupSupviews()
         subscribeToViewModel()
@@ -59,6 +60,9 @@ class ExpensesTableViewController: UIViewController {
         // Empty State
         view.addSubview(emptyStateContainer)
         view.pinEdges(to: emptyStateContainer)
+        
+        // Filter
+        navigationItem.titleView = expenseFilterSegmentedControl
     }
     
     private func subscribeToViewModel() {
@@ -70,11 +74,6 @@ class ExpensesTableViewController: UIViewController {
                 cellType: ExpenseTableViewCell.self)) { (row, element, cell) in
                     cell.setup(with: element)
             }
-            .disposed(by: disposeBag)
-        
-        tableView.rx.modelSelected(Expense.self)
-            .observeOn(MainScheduler.asyncInstance)
-            .bind(to: viewModel.didSelectExpense)
             .disposed(by: disposeBag)
         
         // Loading indicator
@@ -97,6 +96,17 @@ class ExpensesTableViewController: UIViewController {
                 self?.navigationController?.pushViewController(vc, animated: true)
             })
             .disposed(by: disposeBag)
+        
+        // Input to View Model
+        tableView.rx.modelSelected(Expense.self)
+            .observeOn(MainScheduler.asyncInstance)
+            .bind(to: viewModel.didSelectExpense)
+            .disposed(by: disposeBag)
+        
+        expenseFilterSegmentedControl.rx.selectedSegmentIndex
+            .map(FilterMode.init)
+            .bind(to: viewModel.filterMode)
+            .disposed(by: disposeBag)
     }
     
     // MARK: - View Hierarchy
@@ -118,7 +128,12 @@ class ExpensesTableViewController: UIViewController {
         return activityView
     }()
     
-    lazy var emptyStateLabel = UILabel.make(Font.bodyPlaceholder, textColor: Font.Color.placeholder)
+    lazy var emptyStateLabel: UILabel = {
+        let label = UILabel.make(Font.bodyPlaceholder, textColor: Font.Color.placeholder)
+        label.textAlignment = .center
+        label.numberOfLines = 2
+        return label
+    }()
     
     lazy var emptyStateContainer: UIView = {
         let view = UIView.make()
@@ -126,8 +141,20 @@ class ExpensesTableViewController: UIViewController {
         view.leadingAnchor.constraint(equalTo: emptyStateLabel.leadingAnchor, constant: -16).isActive = true
         view.trailingAnchor.constraint(equalTo: emptyStateLabel.trailingAnchor, constant: 16).isActive = true
         view.centerYAnchor.constraint(equalTo: emptyStateLabel.centerYAnchor).isActive = true
-        emptyStateLabel.textAlignment = .center
         return view
+    }()
+    
+    enum FilterMode: Int {
+        case all = 0
+        case comment
+        case receipt
+    }
+    
+    lazy var expenseFilterSegmentedControl: UISegmentedControl = {
+        let control = UISegmentedControl.init(items: ["All", "With comment", "With receipt"])
+        control.selectedSegmentIndex = 0
+        control.contentHorizontalAlignment = .center
+        return control
     }()
 }
 

@@ -63,7 +63,6 @@ class ExpenseReceiptViewController: UIViewController {
     
     private lazy var mainStackView = UIStackView.make([titleLabel, receiptsStackView, photoButtonContainer], spacing: 16)
     
-    
     private lazy var titleLabel = UILabel.make(Font.title, text: "Receipt")
     
     private lazy var receiptsStackView = UIStackView.make([], spacing: 4)

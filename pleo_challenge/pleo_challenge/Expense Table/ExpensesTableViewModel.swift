@@ -30,12 +30,15 @@ class ExpensesTableViewModel {
     
     let didSelectExpense = PublishSubject<Expense>()
     
+    let filterMode = BehaviorSubject<ExpensesTableViewController.FilterMode?>.init(value: .all)
+    
     // MARK: - Output
     
     let title = "Expenses"
     
     lazy var expenses: Observable<[Expense]> = {
         expenseManager.expenses
+            .flatMapLatest(updateWithFilter)
             .do(onNext: { [weak self] _ in self?._loadingExpenses.onNext(false) },
                 onError: { [weak self] _ in self?._loadingExpenses.onNext(false) })
             .share(replay: 1, scope: .whileConnected)
@@ -52,8 +55,8 @@ class ExpensesTableViewModel {
     }()
     
     lazy var showEmptyStateWithMessage: Driver<String?> = {
-        let error = errorLoadingExpenses.map { _ in "Could not load Expenses" }.map(Optional.init)
-        let expenseResult = expenses.map { $0.isEmpty ? "Did not find any Expenses" : nil }
+        let error = errorLoadingExpenses.map { _ in "Could not load expenses" }.map(Optional.init)
+        let expenseResult = expenses.map { $0.isEmpty ? "Did not find any expenses" : nil }
         return Observable.merge(error, expenseResult)
             .asDriver(onErrorDriveWith: .empty())
     }()
@@ -71,4 +74,24 @@ class ExpensesTableViewModel {
         }
     }()
     
+    // MARK: - Filter
+    
+    private lazy var updateWithFilter: ([Expense]) -> Observable<[Expense]> = { [weak self] expenses in
+        guard let filter = self?.filterMode else { return .just(expenses) }
+        return filter.flatMap { filter -> Observable<[Expense]> in
+            let filteredExpenses = self?.filterExpenses(expenses, filter) ?? expenses
+            return .just(filteredExpenses)
+        }
+    }
+    
+    private lazy var filterExpenses: ([Expense], ExpensesTableViewController.FilterMode?) -> [Expense] = { (expenses, filter)  in
+        guard let filter = filter else { return expenses }
+        return expenses.filter { expense -> Bool in
+            switch filter {
+            case .all: return true
+            case .comment: return !expense.comment.isEmpty
+            case .receipt: return !expense.receipts.isEmpty
+            }
+        }
+    }
 }

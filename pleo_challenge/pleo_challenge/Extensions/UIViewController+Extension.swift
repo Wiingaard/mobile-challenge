@@ -46,7 +46,11 @@ extension UIViewController {
     }
     
     /// Wraps `self` in a Navigation Controller
-    func inNavigationController() -> UIViewController {
-        return UINavigationController.init(rootViewController: self)
+    func inNavigationController(barTintColor: UIColor? = nil) -> UIViewController {
+        let navVc = UINavigationController.init(rootViewController: self)
+        if let tintColor = barTintColor {
+            navVc.navigationBar.tintColor = tintColor
+        }
+        return navVc
     }
 }
