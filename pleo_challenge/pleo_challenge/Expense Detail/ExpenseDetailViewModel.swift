@@ -49,6 +49,7 @@ class ExpenseDetailViewModel {
         return loadExpense
             .do(onNext: { [weak self] _ in self?._loadingExpense.onNext(false) })
             .filter { $0 != nil }.map { $0! }
+            .share(replay: 1, scope: .whileConnected)
     }()
     
     private lazy var errorLoadingExpense: Observable<Void> = {

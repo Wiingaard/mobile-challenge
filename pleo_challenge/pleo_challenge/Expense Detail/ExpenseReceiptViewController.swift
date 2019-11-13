@@ -43,31 +43,52 @@ class ExpenseReceiptViewController: UIViewController {
         
     }
     
-    private let presenter = PublishSubject<UIViewController>()
-    
-    lazy var imageHelper = ImageHelper(presenter: presenter)
-    
     private func subscribeToViewModel() {
-        presenter
+        viewModel.presentViewController
+            .observeOn(MainScheduler.instance)
             .subscribe(onNext: { [weak self] in
                 self?.present($0, animated: true, completion: nil)
             }).disposed(by: disposeBag)
         
-        photoButton.rx.tap
-            .flatMap { [weak self] in
-                self?.imageHelper.getImage() ?? .empty()
-        }
-        .subscribe(onNext: { image in
-            print(image)
-        })
-            .disposed(by: disposeBag)
+        viewModel.receiptImages
+            .drive(onNext: { [weak self] receipts in
+                self?.updateReceiptsStackContent(with: receipts)
+            }).disposed(by: disposeBag)
+        
+        // Input to View Model
+        photoButton.rx.tap.bind(to: viewModel.addPhotoPressed).disposed(by: disposeBag)
     }
     
     // MARK: - View hierarchy
     
-    private lazy var mainStackView = UIStackView.make([titleLabel, UIView.make(height: 60, color: .systemRed), photoButton], spacing: 16)
+    private lazy var mainStackView = UIStackView.make([titleLabel, receiptsStackView, photoButtonContainer], spacing: 16)
+    
     
     private lazy var titleLabel = UILabel.make(Font.title, text: "Receipt")
+    
+    private lazy var receiptsStackView = UIStackView.make([], spacing: 4)
+    
+    private func updateReceiptsStackContent(with receipts: [String]) {
+        receiptsStackView.subviews.forEach { $0.removeFromSuperview() }
+        if receipts.isEmpty {
+            receiptsStackView.addArrangedSubview(UILabel.make(Font.bodyPlaceholder, textColor: Font.Color.placeholder, text: "No receipts added"))
+        } else {
+            receipts.forEach { receipt in
+                receiptsStackView.addArrangedSubview(UILabel.make(Font.body, text: receipt))
+            }
+        }
+    }
+    
     private lazy var photoButton = RoundFlatButton.make(title: "Add image", color: .pleoBlue)
+    
+    /// This view is needed to be able to freely place `saveButton` inside `mainStackView`
+    private lazy var photoButtonContainer: UIView = {
+        let view = UIView.make()
+        view.addSubview(photoButton)
+        view.topAnchor.constraint(equalTo: photoButton.topAnchor).isActive = true
+        view.bottomAnchor.constraint(equalTo: photoButton.bottomAnchor).isActive = true
+        view.leadingAnchor.constraint(equalTo: photoButton.leadingAnchor).isActive = true
+        return view
+    }()
     
 }
