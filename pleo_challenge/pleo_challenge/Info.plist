@@ -2,11 +2,13 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>CFBundleDisplayName</key>
+	<string>Pleo Challenge</string>
 	<key>NSAppTransportSecurity</key>
-    <dict>
-        <key>NSAllowsLocalNetworking</key>
-        <true/>
-    </dict>
+	<dict>
+		<key>NSAllowsLocalNetworking</key>
+		<true/>
+	</dict>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleExecutable</key>
@@ -42,9 +44,9 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
-    <key>NSCameraUsageDescription</key>
-    <string>You can take photos of receipt to attach to expenses.</string>
-    <key>NSPhotoLibraryUsageDescription</key>
-    <string>You can select photos of receipt to attach to expenses.</string>
+	<key>NSCameraUsageDescription</key>
+	<string>You can take photos of receipt to attach to expenses.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>You can select photos of receipt to attach to expenses.</string>
 </dict>
 </plist>
