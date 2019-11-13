@@ -23,12 +23,11 @@ class ExpenseManager {
     
     // MARK: - Get Expenses
     
-    lazy var expenses: Driver<[Expense]> = {
+    lazy var expenses: Observable<[Expense]> = {
         return load
             .flatMapLatest(getExpensesPage)
             .scan([], accumulator: +)
             .flatMapLatest(syncWithExpenseUpdate)
-            .asDriver(onErrorDriveWith: .empty())
     }()
     
     private lazy var getExpensesPage: (PageParameters) -> Observable<[Expense]> = { [weak self] params -> Observable<[Expense]> in

@@ -14,6 +14,7 @@ class ExpensesTableViewModel {
     
     // MARK: - Init
     
+    private lazy var _loadingExpenses = BehaviorSubject<Bool>.init(value: true)
     private let expenseManager: ExpenseManager
     
     init(expenseManager: ExpenseManager) {
@@ -33,12 +34,13 @@ class ExpensesTableViewModel {
     
     let title = "Expenses"
     
-    lazy var expenses = {
+    lazy var expenses: Observable<[Expense]> = {
         expenseManager.expenses
-            .do(onNext: { [weak self] _ in self?._loadingExpenses.onNext(false) })
+            .do(onNext: { [weak self] _ in self?._loadingExpenses.onNext(false) },
+                onError: { [weak self] _ in self?._loadingExpenses.onNext(false) })
+            .share(replay: 1, scope: .whileConnected)
     }()
     
-    lazy var _loadingExpenses = BehaviorSubject<Bool>.init(value: true)
     lazy var showLoadingIndicator: Driver<Bool> = _loadingExpenses.distinctUntilChanged().asDriver(onErrorDriveWith: .empty())
     
     lazy var presentExpenseDetail: Observable<ExpenseDetailViewModel> = {
@@ -46,6 +48,26 @@ class ExpensesTableViewModel {
             .flatMapLatest { [weak self] expense -> Observable<ExpenseDetailViewModel> in
                 guard let expenseManager = self?.expenseManager else { return .empty() }
                 return .just(ExpenseDetailViewModel(expense: expense, expenseManager: expenseManager))
+        }
+    }()
+    
+    lazy var showEmptyStateWithMessage: Driver<String?> = {
+        let error = errorLoadingExpenses.map { _ in "Could not load Expenses" }.map(Optional.init)
+        let expenseResult = expenses.map { $0.isEmpty ? "Did not find any Expenses" : nil }
+        return Observable.merge(error, expenseResult)
+            .asDriver(onErrorDriveWith: .empty())
+    }()
+    
+    // MARK: - Error
+    
+    private lazy var errorLoadingExpenses: Observable<Error> = {
+        return self.expenses
+            .materialize()
+            .flatMapLatest { event -> Observable<Error> in
+                switch event {
+                case .error(let error): return .just(error)
+                case .completed, .next: return .empty()
+                }
         }
     }()
     

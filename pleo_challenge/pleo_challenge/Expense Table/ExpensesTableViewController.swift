@@ -55,11 +55,16 @@ class ExpensesTableViewController: UIViewController {
         view.addSubview(activityIndicatorView)
         view.centerXAnchor.constraint(equalTo: activityIndicatorView.centerXAnchor).isActive = true
         view.centerYAnchor.constraint(equalTo: activityIndicatorView.centerYAnchor).isActive = true
+        
+        // Empty State
+        view.addSubview(emptyStateContainer)
+        view.pinEdges(to: emptyStateContainer)
     }
     
     private func subscribeToViewModel() {
         // Expenses
-        viewModel.expenses.asObservable()
+        viewModel.expenses
+            .catchErrorJustReturn([])
             .bind(to: tableView.rx.items(
                 cellIdentifier: ExpenseTableViewCell.reuseIdentifier,
                 cellType: ExpenseTableViewCell.self)) { (row, element, cell) in
@@ -76,6 +81,13 @@ class ExpensesTableViewController: UIViewController {
         viewModel.showLoadingIndicator
             .drive(activityIndicatorView.rx.isAnimating)
             .disposed(by: disposeBag)
+        
+        // Empty State
+        viewModel.showEmptyStateWithMessage
+            .drive(onNext: { [weak self] emptyStateMessage in
+                self?.emptyStateContainer.isHidden = emptyStateMessage == nil
+                self?.emptyStateLabel.text = emptyStateMessage
+            }).disposed(by: disposeBag)
         
         // Present Expense Detail
         viewModel.presentExpenseDetail
@@ -104,6 +116,18 @@ class ExpensesTableViewController: UIViewController {
         activityView.hidesWhenStopped = true
         activityView.startAnimating()
         return activityView
+    }()
+    
+    lazy var emptyStateLabel = UILabel.make(Font.bodyPlaceholder, textColor: Font.Color.placeholder)
+    
+    lazy var emptyStateContainer: UIView = {
+        let view = UIView.make()
+        view.addSubview(emptyStateLabel)
+        view.leadingAnchor.constraint(equalTo: emptyStateLabel.leadingAnchor, constant: -16).isActive = true
+        view.trailingAnchor.constraint(equalTo: emptyStateLabel.trailingAnchor, constant: 16).isActive = true
+        view.centerYAnchor.constraint(equalTo: emptyStateLabel.centerYAnchor).isActive = true
+        emptyStateLabel.textAlignment = .center
+        return view
     }()
 }
 
